@@ -1,0 +1,10 @@
+/*Borde rojo*/
+.borde-rojo { border-color: red; }
+
+/*Borde verde*/
+.borde-verde { border-color: green; 
+}
+
+.error{
+    color: red;
+}
