@@ -1,0 +1,5 @@
+/* Estado por defecto del cuerpo de la página */
+body { background-color: white; color: black; transition: 0.3s; }
+
+/* El "borrador" que JS activará */
+.dark-mode { background-color: #222; color: white; }
