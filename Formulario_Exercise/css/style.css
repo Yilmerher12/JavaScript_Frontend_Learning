@@ -1,10 +1,12 @@
-/*Borde rojo*/
-.borde-rojo { border-color: red; }
-
-/*Borde verde*/
-.borde-verde { border-color: green; 
+.error-input {
+    background-color: rgb(170, 131, 131);
+    border-color: rgb(189, 13, 13);
 }
 
-.error{
-    color: red;
+.succed-imput {
+    border-color: rgb(31, 207, 40);
+}
+.alert-text{
+    color: rgb(177, 0, 0) ;
+
 }
