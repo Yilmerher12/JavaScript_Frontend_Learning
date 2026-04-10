@@ -1,0 +1,314 @@
+/*Variables de colores CSS*/
+:root {
+    --verde-primario: #28a745;
+    --verde-oscuro: #218838;
+    --gris-fondo: #f4f7f6;
+    --blanco: #ffffff;
+    --negro-texto: #333333;
+    --rojo-cancelar: #dc3545;
+}
+
+/*se reinicia el diseño por defecto de la pagina*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/*El fondo y el color de toda la pagina*/
+body {
+    background-color: var(--gris-fondo);
+    color: var(--negro-texto);
+}
+
+/*Cambios en la barra de navegación */
+/*Ponemos los elementos de un extremo a otro (horiz) y centrado (vertical)*/
+.barra-navegacion {
+    background-color: var(--verde-primario);
+    color: var(--blanco);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/*Edicion del logo*/
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/*Quitamos los puntos del link*/
+.enlaces-navegacion {
+    list-style: none;
+    display: flex;
+}
+
+/*Estilo para los enlaces de navegación*/
+.enlaces-navegacion a {
+    color: var(--blanco);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: background 0.3s;
+}
+
+/*Estilo para el enlace activo (la linea de abajo en USUARIOS)*/
+.enlaces-navegacion a.activo {
+    border-bottom: 2px solid var(--blanco);
+}
+
+/*Contenedor Main */
+.contenedor-principal {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+/*Cambia todo dentro del header*/
+.encabezado-contenido {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+/*Edicion del boton de registrar usuario*/
+.boton-principal {
+    background-color: var(--verde-primario);
+    color: var(--blanco);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s;
+}
+
+/*Cuando pasamos el mouse el color del boton cambia*/
+.boton-principal:hover {
+    background-color: var(--verde-oscuro);
+}
+
+
+/*El contenedor del filtro */
+.selector-personalizado {
+    position: relative; /* Para que la flecha se posicione respecto a este cuadro */
+    width: 250px;
+    margin-bottom: 1.5rem;
+}
+
+/* 2. El SELECT propiamente */
+.selector-personalizado select {
+    appearance: none;
+    -webkit-appearance: none;
+    
+    width: 100%;
+    padding: 5px 10px;
+    background-color: var(--blanco);
+    border: 2px solid var(--verde-primario);
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--negro-texto);
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+/*Efecto al pasar el mouse o hacer clic */
+.selector-personalizado select:focus {
+    box-shadow: 0 0 10px rgba(40, 167, 69, 0.2);
+    border-color: var(--verde-oscuro);
+}
+
+/*Creando nuestra propia flecha con CSS */
+.selector-personalizado::after {
+    content: '\f107';
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%); 
+    pointer-events: none; 
+    color: var(--verde-primario);
+}
+
+
+/*La matriz donde se va a ver todos los registros*/
+.contenedor-tabla {
+    background-color: var(--blanco);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/*Cambio en la tabla*/
+table {
+    width: 100%;
+    border-collapse: inherit; /*Deja ver los espacios entre celdas*/
+}
+
+/*Estilos para las celdas y los registros*/
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eeeeee;
+}
+
+/*Estilo para los encabezados de la tabla*/
+th {
+    background-color: #f8f9fa;
+    color: #666;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+}
+/*Estilo para las filas de la tabla*/
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Todo lo que tiene que ver con el modal y el backdrop*/
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Capa oscura semitransparente */
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 1000; /* Asegura que esté por encima de todo el contenido */
+}
+
+.contenido-modal {
+    background-color: var(--blanco);
+    padding: 2.5rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    /* ESTO ES LO NUEVO: */
+    max-height: 90vh;    /* El modal nunca medirá más del 90% de la altura de la ventana */
+    overflow-y: auto;    /* Activa la barra vertical solo si el contenido se desborda */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/*Cambiamos el estilo de la barra de desplazamiento*/
+.contenido-modal::-webkit-scrollbar {
+    width: 8px;
+}
+
+.contenido-modal::-webkit-scrollbar-thumb {
+    background: var(--verde-primario);
+    border-radius: 10px;
+}
+
+.contenido-modal::-webkit-scrollbar-track {
+    background: #adabab;
+}
+
+/* Todo lo que tiene que ver con el formulario en cuadrícula */
+.formulario-cuadricula {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Divide el espacio en dos columnas iguales */
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.grupo-formulario {
+    display: flex;
+    flex-direction: column;
+}
+
+.grupo-formulario label {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.grupo-formulario input, 
+.grupo-formulario select {
+    padding: 0.7rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+/* Campos que deben ocupar las dos columnas (como email o pass) */
+.ancho-completo {
+    grid-column: span 2;
+}
+
+.acciones-formulario {
+    grid-column: span 2;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.seccion-especifica {
+    display: none; /* Oculto por defecto */
+    grid-column: span 2; /* Para que ocupen el ancho del grid */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+/* Boton de enviar o cancelar del formulario */
+.boton-enviar {
+    background-color: var(--verde-primario);
+    color: var(--blanco);
+    border: none;
+    padding: 0.7rem 2rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.boton-cancelar {
+    background-color: #6c757d;
+    color: var(--blanco);
+    border: none;
+    padding: 0.7rem 2rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.icono-accion {
+    cursor: pointer;
+    margin: 0 5px;
+    font-size: 1.1rem;
+    color: #555;
+}
+
+/*Estilos por si no o si se cumple la validacion de los inputs*/
+
+.campo-error {
+    border: 2px solid var(--rojo-cancelar) !important;
+}
+
+.campo-exito {
+    border: 2px solid var(--verde-primario) !important;
+}
+
+.boton-enviar:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    filter: grayscale(1);
+}
+
+.mensaje-error {
+    color: var(--rojo-cancelar);
+    font-size: 0.75rem;
+    margin-top: 0.2rem;
+    height: 1rem; /* Mantiene el espacio aunque esté vacío */
+    display: block;
+}
+
+/*Estilos para los íconos de editar o borrar registros que esta en la matriz*/
+.icono-editar:hover { color: var(--verde-primario); }
+.icono-eliminar:hover { color: var(--rojo-cancelar); }

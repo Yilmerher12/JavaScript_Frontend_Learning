@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VerdeApp - Gestión de Usuarios</title>
+    <!-- Los links de estilo y javascript -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+
+    <!--La direccion de los documentos css y javascript-->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/script.js" defer></script>
+</head>
+<body>
+
+    <!-- Barra de navegación -->
+    <nav class="barra-navegacion">
+        <div class="logo"><i class="fa-solid fa-leaf"></i> VerdeApp</div>
+        <ul class="enlaces-navegacion">
+            <li><a href="#" class="activo">Usuarios</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenedor principal -->
+    <main class="contenedor-principal">
+        <header class="encabezado-contenido">
+            <h1>Gestión de Usuarios</h1>
+            <button id="botonAbrirModal" class="boton-principal">
+                <i class="fa-solid fa-user-plus"></i> Registrar Usuario
+            </button>
+        </header>
+
+        <!-- Filtro por rol -->
+        <div class="contenedor-filtros" style="margin-bottom: 1rem;">
+            <label for="filtroRol">Filtrar por Rol:</label>
+            <div class="selector-personalizado">
+                <select id="filtroRol">
+                    <option value="TODOS">Ver Todos</option>
+                    <option value="RESIDENTE">Residente</option>
+                    <option value="RECICLADOR">Reciclador</option>
+                    <option value="ADMINISTRADOR">Administrador</option>
+                    <option value="PUNTO_ACOPIO">Punto de Acopio</option>
+                </select>
+            </div>
+        
+        </div>
+
+        <!--La tabla que muestra todos los registros-->
+        <section class="contenedor-tabla">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Documento</th>
+                        <th>Nombre Completo</th> 
+                        <th>Rol</th>
+                        <th>Edad</th> 
+                        <th>Email</th>
+                        <th>Registro</th> 
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <!-- ID IMPORTANTE PARA EL JS -->
+                <tbody id="cuerpoTabla"></tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- Ventana Modal para el formulario de registro -->
+    <div id="ventanaModal" class="modal">
+        <div class="contenido-modal">
+            <h2 id="tituloFormulario">Registrar Nuevo Usuario</h2>
+            
+            <!-- Se quitan las validaciones de google -->
+             <!--Todo el formulario-->
+            <form id="formularioUsuario" class="formulario-cuadricula" novalidate>
+                
+                <div class="grupo-formulario">
+                    <label for="documento">Documento de Identidad</label>
+                    <input type="text" id="documento">
+                    <span id="error-documento" class="mensaje-error"></span>
+                </div>
+
+                <div class="grupo-formulario">
+                    <label for="nombre">Nombre(s)</label>
+                    <input type="text" id="nombre">
+                    <span id="error-nombre" class="mensaje-error"></span>
+                </div>
+
+                <div class="grupo-formulario">
+                    <label for="apellido">Apellido(s)</label>
+                    <input type="text" id="apellido">
+                    <span id="error-apellido" class="mensaje-error"></span>
+                </div>
+
+                <div class="grupo-formulario">
+                    <label for="edad">Edad</label>
+                    <input type="number" id="edad">
+                    <span id="error-edad" class="mensaje-error"></span>
+                </div>
+
+                <div class="grupo-formulario">
+                    <label for="telefono">Teléfono Celular</label>
+                    <input type="text" id="telefono">
+                    <span id="error-telefono" class="mensaje-error"></span>
+                </div>
+
+                <div class="grupo-formulario">
+                    <label for="email">Correo Electrónico</label>
+                    <input type="email" id="email">
+                    <span id="error-email" class="mensaje-error"></span>
+                </div>
+
+                <div class="grupo-formulario">
+                    <label for="rol">Rol en el Proyecto</label>
+                    <select id="rol">
+                        <option value="RESIDENTE">Residente</option>
+                        <option value="RECICLADOR">Reciclador</option>
+                        <option value="ADMINISTRADOR">Administrador</option>
+                        <option value="PUNTO_ACOPIO">Punto de Acopio</option>
+                    </select>
+                </div>
+
+                <div id="seccion-residente" class="seccion-especifica">
+                <div class="grupo-formulario">
+                    <label for="torre">Torre</label>
+                    <input type="text" id="torre">
+                </div>
+                <div class="grupo-formulario">
+                    <label for="apartamento">Apartamento</label>
+                    <input type="text" id="apartamento">
+                </div>
+                </div>
+
+                <div id="seccion-acopio" class="seccion-especifica">
+                <div class="grupo-formulario ancho-completo">
+                    <label for="materiales">Materiales Aceptados (ej: Vidrio, Papel)</label>
+                    <input type="text" id="materiales">
+                </div>
+                <div class="grupo-formulario">
+                    <label for="precio-kg">Precio promedio por KG</label>
+                    <input type="number" id="precio-kg">
+                </div>
+                </div>
+
+                <div class="grupo-formulario ancho-completo">
+                    <label for="contrasena">Contraseña</label>
+                    <input type="password" id="contrasena">
+                    <span id="error-contrasena" class="mensaje-error"></span>
+                </div>
+
+                <div class="acciones-formulario">
+                    <button type="button" id="botonCancelarModal" class="boton-cancelar">Cancelar</button>
+                    <button type="submit" id="botonGuardar" class="boton-enviar">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
