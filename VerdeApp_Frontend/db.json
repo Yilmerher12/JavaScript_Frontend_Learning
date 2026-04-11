@@ -1,0 +1,32 @@
+{
+  "usuarios": [
+    {
+      "nombre": "Mariana",
+      "apellido": "Hernandez Camargo",
+      "email": "yilmerpdf@gmail.com",
+      "pass": "djdjdjdj",
+      "conjunto": "vvvvvvvvvvvv",
+      "direccion": "CALLE 84 sur # 96 - 20",
+      "rol": "ADMINISTRADOR",
+      "id": "TV6xuIVwXXA"
+    },
+    {
+      "nombre": "Mariana",
+      "apellido": "Hernandez Camargo",
+      "email": "yilmerpdf@gmail.com",
+      "torre": "1",
+      "apto": "204",
+      "conjunto": "vvvvvvvvvvvv",
+      "rol": "RESIDENTE",
+      "id": "QJAHQMT8t3E"
+    }
+  ],
+  "conjuntos": [
+    {
+      "nombre": "vvvvvvvvvvvv",
+      "direccion": "CALLE 84 sur # 96 - 20",
+      "id": "mWId7u18DLM"
+    }
+  ],
+  "$schema": "node_modules/json-server/schema.json"
+}

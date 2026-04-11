@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VerdeApp - Gestión Pro</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <script src="assets/js/script.js" defer></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <nav class="barra-navegacion">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fa-solid fa-leaf"></i> VerdeApp
+            </div>
+            <ul class="enlaces-navegacion" id="menu-navegacion">
+                <li><button id="btnAbrirLogin" class="enlace-nav-btn">Iniciar Sesión</button></li>
+                <li><button id="btnAbrirRegistro" class="btn-nav">Registrar Conjunto</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="contenedor-principal">
+        
+        <section id="seccion-lobby" class="hero seccion-visible">
+            <h1>Bienvenido a la Gestión Ambiental</h1>
+            <p>Optimiza la recolección y clasificación de residuos en tu comunidad residencial.</p>
+        </section>
+
+        <section id="vista-dashboard" class="seccion-oculta" style="display: none;">
+            <div class="dashboard-header">
+                <div>
+                    <h2 id="txtSaludo">Panel Administrativo</h2>
+                    <p id="txtInfoConjunto" class="texto-secundario"></p>
+                </div>
+                <button id="btnNuevoResidente" class="btn-verde-accion">
+                    <i class="fa-solid fa-plus"></i> Agregar Residente
+                </button>
+            </div>
+
+            <div class="contenedor-tabla-matriz">
+                <table id="tablaUsuarios">
+                    <thead>
+                        <tr>
+                            <th>Nombre Completo</th>
+                            <th>Email</th>
+                            <th>Ubicación (T/A)</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoMatriz">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <div id="modalRegistro" class="overlay-modal">
+        <div class="caja-modal">
+            <h3>Registrar Administrador y Conjunto</h3>
+            <form id="formRegistroAdmin" class="formulario-grid" novalidate>
+                
+                <div class="campo">
+                    <label for="regNombre">Nombres</label>
+                    <input type="text" id="regNombre" placeholder="Ej: Carlos">
+                    <span id="error-regNombre" class="mensaje-error"></span>
+                </div>
+                
+                <div class="campo">
+                    <label for="regApellido">Apellidos</label>
+                    <input type="text" id="regApellido" placeholder="Ej: Rodríguez">
+                    <span id="error-regApellido" class="mensaje-error"></span>
+                </div>
+
+                <div class="campo">
+                    <label for="regEmail">Correo Electrónico</label>
+                    <input type="email" id="regEmail" placeholder="admin@correo.com">
+                    <span id="error-regEmail" class="mensaje-error"></span>
+                </div>
+
+                <div class="campo">
+                    <label for="regPass">Contraseña</label>
+                    <input type="password" id="regPass" placeholder="Mínimo 6 caracteres">
+                    <span id="error-regPass" class="mensaje-error"></span>
+                </div>
+
+                <div class="campo">
+                    <label for="regConjunto">Nombre del Conjunto</label>
+                    <input type="text" id="regConjunto" placeholder="Ej: Torres del Sol">
+                    <span id="error-regConjunto" class="mensaje-error"></span>
+                </div>
+
+                <div class="campo">
+                    <label for="regDireccion">Dirección del Conjunto</label>
+                    <input type="text" id="regDireccion" placeholder="Ej: Calle 100 # 15-20">
+                    <span id="error-regDireccion" class="mensaje-error"></span>
+                </div>
+
+                <div class="botones-form ancho-total">
+                    <button type="button" class="btn-cancelar" onclick="cerrarModales()">Cerrar</button>
+                    <button type="submit" id="btnGuardarAdmin" class="btn-guardar" disabled>Crear Cuenta</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modalLogin" class="overlay-modal">
+        <div class="caja-modal modal-pequeno">
+            <h3>Iniciar Sesión</h3>
+            <form id="formLogin" class="formulario-vertical">
+                <div class="campo">
+                    <label for="loginEmail">Correo Electrónico</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="campo">
+                    <label for="loginPass">Contraseña</label>
+                    <input type="password" id="loginPass" required>
+                </div>
+                <div class="botones-form">
+                    <button type="button" class="btn-cancelar" onclick="cerrarModales()">Cerrar</button>
+                    <button type="submit" class="btn-guardar">Entrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modalResidente" class="overlay-modal">
+        <div class="caja-modal">
+            <h3 id="tituloModalRes">Datos del Residente</h3>
+            <form id="formResidente" class="formulario-grid" novalidate>
+                
+                <div class="campo">
+                    <label for="resNombre">Nombres</label>
+                    <input type="text" id="resNombre">
+                    <span id="error-resNombre" class="mensaje-error"></span>
+                </div>
+
+                <div class="campo">
+                    <label for="resApellido">Apellidos</label>
+                    <input type="text" id="resApellido">
+                    <span id="error-resApellido" class="mensaje-error"></span>
+                </div>
+
+                <div class="campo ancho-total">
+                    <label for="resEmail">Correo Electrónico</label>
+                    <input type="email" id="resEmail">
+                    <span id="error-resEmail" class="mensaje-error"></span>
+                </div>
+
+                <div class="campo">
+                    <label for="resTorre">Torre / Bloque</label>
+                    <input type="text" id="resTorre">
+                    <span id="error-resTorre" class="mensaje-error"></span>
+                </div>
+
+                <div class="campo">
+                    <label for="resApto">Apartamento</label>
+                    <input type="text" id="resApto">
+                    <span id="error-resApto" class="mensaje-error"></span>
+                </div>
+
+                <div class="botones-form ancho-total">
+                    <button type="button" class="btn-cancelar" onclick="cerrarModales()">Cancelar</button>
+                    <button type="submit" id="btnGuardarResidente" class="btn-guardar" disabled>Guardar Residente</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
