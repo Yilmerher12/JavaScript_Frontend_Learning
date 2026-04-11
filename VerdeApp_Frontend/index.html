@@ -5,20 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VerdeApp - Gestión Pro</title>
 
+    <!-- Iconos y fuentes traidas de librerias externas-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+    <!-- Direccion de los archivos css y js-->
     <script src="assets/js/script.js" defer></script>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-
+<!-- Todo el contenido de la barra de navegacion-->
     <nav class="barra-navegacion">
         <div class="nav-container">
+            <!--contenedor que guarda el icono (hojita)-->
             <div class="logo">
+                <!--El uso de la clase con fa es para que Font-awesome pueda detectarlo-->
                 <i class="fa-solid fa-leaf"></i> VerdeApp
             </div>
+            <!--botones de inicio de sesión y registro en modo listo--> 
             <ul class="enlaces-navegacion" id="menu-navegacion">
                 <li><button id="btnAbrirLogin" class="enlace-nav-btn">Iniciar Sesión</button></li>
                 <li><button id="btnAbrirRegistro" class="btn-nav">Registrar Conjunto</button></li>
@@ -26,8 +30,10 @@
         </div>
     </nav>
 
+    <!--contenedor principal de la pagina con la parte del dashboard oculto-->
     <main class="contenedor-principal">
-        
+
+        <!--contenido que de mostrara en la pagina principal-->
         <section id="seccion-lobby" class="hero seccion-visible">
             <h1>Bienvenido a la Gestión Ambiental</h1>
             <p>Optimiza la recolección y clasificación de residuos en tu comunidad residencial.</p>
@@ -39,13 +45,16 @@
                     <h2 id="txtSaludo">Panel Administrativo</h2>
                     <p id="txtInfoConjunto" class="texto-secundario"></p>
                 </div>
+                <!--usamos el sufijo 'fa' por estandar de la libreria para que detecte el lugar donde vamos a usar el icono-->
                 <button id="btnNuevoResidente" class="btn-verde-accion">
                     <i class="fa-solid fa-plus"></i> Agregar Residente
                 </button>
             </div>
 
+            <!--Contenedor que guarda la tabla donde va aparecer todos los registros de residentes-->
             <div class="contenedor-tabla-matriz">
                 <table id="tablaUsuarios">
+                    <!--Primera parte es el encabezado de la tabla -->
                     <thead>
                         <tr>
                             <th>Nombre Completo</th>
@@ -54,6 +63,7 @@
                             <th>Acciones</th>
                         </tr>
                     </thead>
+                    <!--se deja vacio todas las celdas del cuerpo de la tabla porque se completara con base a lo que ingresen en el formulario-->
                     <tbody id="cuerpoMatriz">
                         </tbody>
                 </table>
@@ -61,11 +71,15 @@
         </section>
     </main>
 
+    <!--Modal del formulario de registro de admin y conjunto--> 
     <div id="modalRegistro" class="overlay-modal">
         <div class="caja-modal">
             <h3>Registrar Administrador y Conjunto</h3>
+            <!--formulario sin las validaciones por defecto del navegador-->
             <form id="formRegistroAdmin" class="formulario-grid" novalidate>
-                
+
+                <!--Cada div guarda un input y los botoned del formulario -->
+                <!--Label para que el texto este relacionado con el input-->
                 <div class="campo">
                     <label for="regNombre">Nombres</label>
                     <input type="text" id="regNombre" placeholder="Ej: Carlos">
@@ -110,6 +124,7 @@
         </div>
     </div>
 
+   <!--Modal del formulario de inicio de sesión (el boton que esta en la barra de navegación)-->              
     <div id="modalLogin" class="overlay-modal">
         <div class="caja-modal modal-pequeno">
             <h3>Iniciar Sesión</h3>
@@ -130,6 +145,7 @@
         </div>
     </div>
 
+    <!--Modal del formulario para registrar residentes-->             
     <div id="modalResidente" class="overlay-modal">
         <div class="caja-modal">
             <h3 id="tituloModalRes">Datos del Residente</h3>
