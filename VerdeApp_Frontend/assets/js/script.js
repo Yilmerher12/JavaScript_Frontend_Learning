@@ -1,15 +1,14 @@
 // ==========================================
-// 1. CONFIGURACIÓN Y DIRECCIONES (API)
-// ==========================================
+//las direcciones de la API
 const urlUsuarios = "http://localhost:3000/usuarios";
 const urlConjuntos = "http://localhost:3000/conjuntos";
 
+//no se que es eso
 let sesionActiva = null; 
 let idEdicionResidente = null; 
 
 // ==========================================
-// 2. CAPTURA DE NODOS (DOM)
-// ==========================================
+// Captura de elementos nodos del DOM de la pagina para usarlo en el js
 const seccionLobby = document.getElementById("seccion-lobby");
 const vistaDashboard = document.getElementById("vista-dashboard");
 const menuNavegacion = document.getElementById("menu-navegacion");
@@ -27,8 +26,7 @@ const btnGuardarAdmin = document.getElementById("btnGuardarAdmin");
 const btnGuardarResidente = document.getElementById("btnGuardarResidente");
 
 // ==========================================
-// 3. PERSISTENCIA Y CARGA INICIAL
-// ==========================================
+//No se que hace esta parte del codigo. 
 window.addEventListener("load", () => {
     const sesionGuardada = localStorage.getItem("verdeApp_sesion");
     if (sesionGuardada) {
@@ -37,8 +35,7 @@ window.addEventListener("load", () => {
 });
 
 // ==========================================
-// 4. VALIDACIONES
-// ==========================================
+//las validaciones reGex para los campos en el formulario 
 const patrones = {
     nombre: /^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]{3,20}$/,
     email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
@@ -47,7 +44,9 @@ const patrones = {
     ubicacion: /^[a-zA-Z0-9\s]{1,10}$/
 };
 
+//funcion para cerrar modales
 function cerrarModales() {
+    //display 'none' lod oculta
     modalRegistro.style.display = "none";
     modalLogin.style.display = "none";
     modalResidente.style.display = "none";
@@ -56,6 +55,7 @@ function cerrarModales() {
     inputs.forEach(input => input.classList.remove('campo-error', 'campo-exito'));
 }
 
+//funcion que valida campo de los formularios y/o modales
 function validarCampo(input, regex, mensaje) {
     const spanError = document.getElementById(`error-${input.id}`);
     const esValido = regex.test(input.value);
@@ -71,6 +71,7 @@ function validarCampo(input, regex, mensaje) {
     verificarEstadoBotones();
 }
 
+//no entiendo que hace esta funcion y menos todo el contenido 
 function verificarEstadoBotones() {
     const adminOk = (
         patrones.nombre.test(document.getElementById("regNombre").value) &&
@@ -93,8 +94,7 @@ function verificarEstadoBotones() {
 }
 
 // ==========================================
-// 5. NAVEGACIÓN
-// ==========================================
+//tampoco entiendo esto, no entiendo su logica o que es lo que hace
 function entrarAlDashboard(admin) {
     sesionActiva = admin;
     localStorage.setItem("verdeApp_sesion", JSON.stringify(admin));
@@ -117,9 +117,7 @@ function entrarAlDashboard(admin) {
 }
 
 // ==========================================
-// 6. CRUD
-// ==========================================
-
+// 6. 
 formLogin.onsubmit = async (e) => {
     e.preventDefault();
     try {
@@ -136,6 +134,7 @@ formLogin.onsubmit = async (e) => {
     } catch (err) { console.error(err); }
 };
 
+// no tengo ni la mas minima idea de lo que es esto
 formRegistroAdmin.onsubmit = async (e) => {
     e.preventDefault();
     const nuevoAdmin = {
@@ -167,6 +166,7 @@ formRegistroAdmin.onsubmit = async (e) => {
     } catch (err) { console.error(err); }
 };
 
+//tampoco aqui
 async function cargarMatrizResidentes() {
     try {
         const r = await fetch(urlUsuarios);
@@ -187,6 +187,7 @@ async function cargarMatrizResidentes() {
     } catch (err) { console.error(err); }
 }
 
+//menos aquí 
 formResidente.onsubmit = async (e) => {
     e.preventDefault();
     const data = {
@@ -216,6 +217,8 @@ formResidente.onsubmit = async (e) => {
     } catch (err) { console.error(err); }
 };
 
+//no entiendo que hace esto
+// es una funcion? por que usa lo de window? que vergas hace?
 window.eliminarResidente = async (id) => {
     const confirm = await Swal.fire({ title: "¿Eliminar?", icon: "warning", showCancelButton: true });
     if (confirm.isConfirmed) {
@@ -224,6 +227,7 @@ window.eliminarResidente = async (id) => {
     }
 };
 
+//no entiendo el uso de window, por que no document?
 window.prepararEdicionResidente = async (id) => {
     const r = await (await fetch(`${urlUsuarios}/${id}`)).json();
     idEdicionResidente = id;
@@ -238,12 +242,13 @@ window.prepararEdicionResidente = async (id) => {
 };
 
 // ==========================================
-// 7. EVENTOS
-// ==========================================
+//entiendo poco aqui, pero sigo sonando chino.
+//se crean los listeners para las funciones, pero no entiendo esa sintaxis y de donde sale todo eso
 document.getElementById("btnAbrirRegistro").onclick = () => { formRegistroAdmin.reset(); modalRegistro.style.display = "flex"; };
 document.getElementById("btnAbrirLogin").onclick = () => { formLogin.reset(); modalLogin.style.display = "flex"; };
 document.getElementById("btnNuevoResidente").onclick = () => { idEdicionResidente = null; formResidente.reset(); tituloModalRes.textContent = "Nuevo Residente"; modalResidente.style.display = "flex"; };
 
+//supongo que son las validaciones de cada tipo de input, pero no se de que trata o de donde sale todo eso
 regNombre.oninput = (e) => validarCampo(e.target, patrones.nombre, "Mínimo 3 letras");
 regApellido.oninput = (e) => validarCampo(e.target, patrones.nombre, "Mínimo 3 letras");
 regEmail.oninput = (e) => validarCampo(e.target, patrones.email, "Email inválido");
@@ -251,6 +256,7 @@ regPass.oninput = (e) => validarCampo(e.target, patrones.clave, "Mínimo 6 carac
 regDireccion.oninput = (e) => validarCampo(e.target, patrones.direccion, "Dirección muy corta");
 regConjunto.oninput = verificarEstadoBotones;
 
+//no se que es eso
 resNombre.oninput = (e) => validarCampo(e.target, patrones.nombre, "Inválido");
 resApellido.oninput = (e) => validarCampo(e.target, patrones.nombre, "Inválido");
 resEmail.oninput = (e) => validarCampo(e.target, patrones.email, "Inválido");
