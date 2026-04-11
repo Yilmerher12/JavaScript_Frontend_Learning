@@ -3,8 +3,10 @@
 const urlUsuarios = "http://localhost:3000/usuarios";
 const urlConjuntos = "http://localhost:3000/conjuntos";
 
-//no se que es eso
+//variable para guardar los datos del usuario que entro
 let sesionActiva = null; 
+
+//variable para ver si el id residente ya existe
 let idEdicionResidente = null; 
 
 // ==========================================
@@ -26,7 +28,8 @@ const btnGuardarAdmin = document.getElementById("btnGuardarAdmin");
 const btnGuardarResidente = document.getElementById("btnGuardarResidente");
 
 // ==========================================
-//No se que hace esta parte del codigo. 
+//listener para cuando termine de cargar todo vea si hay alguna sesión abierta 
+//si lo esta lo refirecciona al dashboard 
 window.addEventListener("load", () => {
     const sesionGuardada = localStorage.getItem("verdeApp_sesion");
     if (sesionGuardada) {
@@ -71,7 +74,9 @@ function validarCampo(input, regex, mensaje) {
     verificarEstadoBotones();
 }
 
-//no entiendo que hace esta funcion y menos todo el contenido 
+//toma lo que el usuario ingreso y lo testea con el ".test"
+//si el adminOk y el resideneOk son true todos no pasa nada
+//pero si el residente no es Ok el botón de guarda se deshabilita
 function verificarEstadoBotones() {
     const adminOk = (
         patrones.nombre.test(document.getElementById("regNombre").value) &&
@@ -94,37 +99,44 @@ function verificarEstadoBotones() {
 }
 
 // ==========================================
-//tampoco entiendo esto, no entiendo su logica o que es lo que hace
+//funcion para entrsr al dashboard, pero no crea cosas sino que las mueve
 function entrarAlDashboard(admin) {
+    //guarda todo el admin y cierra modales
     sesionActiva = admin;
     localStorage.setItem("verdeApp_sesion", JSON.stringify(admin));
     cerrarModales();
 
+    // esconde la pagina de bienvenida y muestra el dashboard 
     seccionLobby.style.display = "none";
     vistaDashboard.style.display = "block";
 
+    //poner info del usuario y el conjunto como texto
     document.getElementById("txtSaludo").textContent = `Panel de ${admin.nombre} ${admin.apellido}`;
     document.getElementById("txtInfoConjunto").textContent = `Conjunto: ${admin.conjunto} | Sede: ${admin.direccion}`;
 
+    //eliminar o reemplazar el botón de inicio de sesion con el de cerrar sesion
     menuNavegacion.innerHTML = `<li><button class="btn-salir" id="btnCerrarSesion">Cerrar Sesión</button></li>`;
-    
+
+    //si alguien presiona el boton de borrsr sesion, se elimina o borra la interfaz actual
     document.getElementById("btnCerrarSesion").onclick = () => {
         localStorage.removeItem("verdeApp_sesion");
         location.reload();
     };
 
+    //cargar la tabla de los residentes 
     cargarMatrizResidentes();
 }
 
 // ==========================================
-// 6. 
+//se activa cuando se presiona el boton enviar enviar
 formLogin.onsubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault();//cancelar lo que hace el navegador
     try {
         const r = await fetch(urlUsuarios);
         const usuarios = await r.json();
         const admin = usuarios.find(u => u.email === loginEmail.value && u.pass === loginPass.value && u.rol === "ADMINISTRADOR");
 
+        //condicionales con funcion a las credenciales ingresadas
         if (admin) {
             Swal.fire("Acceso Exitoso", `Bienvenido`, "success");
             entrarAlDashboard(admin);
@@ -137,6 +149,8 @@ formLogin.onsubmit = async (e) => {
 // no tengo ni la mas minima idea de lo que es esto
 formRegistroAdmin.onsubmit = async (e) => {
     e.preventDefault();
+
+    //empaca el nuevo admin con todos sus datos 
     const nuevoAdmin = {
         nombre: regNombre.value,
         apellido: regApellido.value,
@@ -149,20 +163,25 @@ formRegistroAdmin.onsubmit = async (e) => {
 
     try {
         await fetch(urlConjuntos, {
+
+            //enviar el conjunto 
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ nombre: nuevoAdmin.conjunto, direccion: nuevoAdmin.direccion })
         });
         const res = await fetch(urlUsuarios, {
+            //enviar el usuario administrador 
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(nuevoAdmin)
         });
+        //si todo esta bien, dsme la ventana y muestra el dasboard
         if (res.ok) {
             const adminCreado = await res.json();
             Swal.fire("¡Éxito!", "Cuenta creada", "success");
             entrarAlDashboard(adminCreado);
         }
+        //si atrapa un error lo guarda en la consola
     } catch (err) { console.error(err); }
 };
 
